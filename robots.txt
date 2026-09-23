@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /mailing/
+Sitemap: https://codessphere.com/sitemap.xml

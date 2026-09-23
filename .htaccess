@@ -1,0 +1,42 @@
+# CodesSphere Info - production clean URL / cPanel Apache rules
+Options -MultiViews
+DirectoryIndex index.php
+RewriteEngine On
+RewriteBase /
+
+# HTTPS + canonical hostname
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\.codessphere\.com$ [NC]
+RewriteRule ^ https://codessphere.com%{REQUEST_URI} [R=301,L,NE]
+
+# Root index.php -> homepage
+RewriteCond %{THE_REQUEST} \s/+index\.php(?:[?\s]|$) [NC]
+RewriteRule ^index\.php$ / [R=301,L]
+
+# Legacy blog query URL -> clean article URL
+RewriteCond %{THE_REQUEST} \s/+blog/post\.php\?slug=([^&\s]+) [NC]
+RewriteRule ^blog/post\.php$ /blog/%1/ [R=301,L,NE]
+
+# Legacy careers HTML -> clean route
+RewriteCond %{THE_REQUEST} \s/+careers\.html(?:[?\s]|$) [NC]
+RewriteRule ^careers\.html$ /careers/ [R=301,L]
+
+# Do not rewrite real files or directories. This makes /about/, /contact/, etc. work via DirectoryIndex.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Legacy .php URLs -> extensionless trailing-slash URLs
+# Keep /about.php available for legacy/direct access. The clean /about/ page is also available.
+RewriteCond %{REQUEST_URI} !^/about\.php$ [NC]
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.php(?:[?\s]|$) [NC]
+RewriteRule ^(.+)\.php$ /$1/ [R=301,L,NE]
+
+# Blog article routing for any article not materialized as a directory
+RewriteRule ^blog/([^/]+)/?$ blog/post.php?slug=$1 [L,QSA]
+
+# Root PHP pages -> clean URLs
+RewriteCond %{DOCUMENT_ROOT}/$1.php -f
+RewriteRule ^([^/.]+)/?$ $1.php [L,QSA]
+
+ErrorDocument 404 /404.php
