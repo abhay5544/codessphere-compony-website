@@ -96,7 +96,7 @@
   <div class="footer-top">
     <div class="footer-brand">
       <a class="brand footer-logo" href="/"><img alt="CodesSphere Info" src="/images/codessphere logo.jpg"></a>
-      <p>We bui digital products, software and technology solutions that help ambitious businesses grow worldwide.</p>
+      <p>We build digital products, software and technology solutions that help ambitious businesses grow worldwide.</p>
       <div class="social-links">
         <a aria-label="LinkedIn" href="javascript:void(0)"><i class="fa-brands fa-linkedin-in"></i></a>
         <a aria-label="Instagram" href="https://www.instagram.com/codessphere.info/"><i class="fa-brands fa-instagram"></i></a>
